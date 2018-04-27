@@ -1,5 +1,8 @@
 package dheisler.nikerun.data;
 
+import java.time.Instant;
+import java.time.format.DateTimeFormatter;
+
 public class Activity
 {
     public static final int RUN = 0;
@@ -8,8 +11,11 @@ public class Activity
 
     private String activityId;
     private int type;
-    private String startTime;
-    private String endTime;
+    private Instant startTime;
+    private Instant endTime;
+    private double distance;
+    private double speed;
+
 
     public Activity(String activityId, int type)
     {
@@ -17,18 +23,65 @@ public class Activity
         this.type = type;
     }
 
+    public boolean ranMoreThankOneK()
+    {
+        return distance > 1;
+    }
+
     public int getActivityType()
     {
         return type;
     }
 
+    public String getActivityId()
+    {
+        return activityId;
+    }
+
+    public String getStartTime()
+    {
+        return startTime.toString();
+    }
+
+    public String getEndTime()
+    {
+        return endTime.toString();
+    }
+
+    public double getDistance()
+    {
+        return distance;
+    }
+
+    public double getSpeed()
+    {
+        return speed;
+    }
+
     public void setStartTime(String startTime)
     {
-        this.startTime = startTime;
+        this.startTime = convertStringToInstant(startTime);
     }
 
     public void setEndTime(String endTime)
     {
-        this.endTime = endTime;
+        this.endTime = convertStringToInstant(endTime);
     }
+
+    public void setDistance(double distance)
+    {
+        this.distance = distance;
+    }
+
+    public void setSpeed(double speed)
+    {
+        this.speed = speed;
+    }
+
+    private Instant convertStringToInstant(String instant)
+    {
+        DateTimeFormatter dtf = DateTimeFormatter.ISO_INSTANT;
+        return Instant.from(dtf.parse(instant));
+    }
+
 }

@@ -8,10 +8,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class ActivityTest
 {
     private static final String activityId = "aShortActivityId";
-    private static final String startTime = "";
-    private static final String endTime = "";
-
-    private Activity activity;
+    private static final String startTime = "2017-04-30T18:01:50Z";
+    private static final String endTime = "2017-04-30T18:50:31.166Z";
 
     @BeforeEach
     public void setup()
@@ -26,6 +24,8 @@ class ActivityTest
         activity.setStartTime(startTime);
         activity.setEndTime(endTime);
         assertEquals(Activity.OTHER, activity.getActivityType());
+        assertEquals(startTime, activity.getStartTime());
+        assertEquals(endTime, activity.getEndTime());
     }
 
 
