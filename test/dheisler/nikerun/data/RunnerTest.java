@@ -27,7 +27,7 @@ class RunnerTest
     @Test
     public void testAddingOneRunToRunner()
     {
-        Activity activity = new Activity(activityId);
+        Activity activity = new Activity(activityId, Activity.OTHER);
         runner.addActivity(activity);
         assertEquals(1, runner.getNumberofActivities());
     }
