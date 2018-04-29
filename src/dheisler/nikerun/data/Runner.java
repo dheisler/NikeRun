@@ -45,4 +45,10 @@ public class Runner
                 (Activity act1, Activity act2) -> act1.compareTo(act2)
         );
     }
+
+    public Activity[] getArrayOfActivities()
+    {
+        Activity[] array = new Activity[activities.size()];
+        return activities.toArray(array);
+    }
 }
