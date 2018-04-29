@@ -38,6 +38,12 @@ public class Runner
         return activities.size();
     }
 
+    public Activity[] getArrayOfActivities()
+    {
+        Activity[] array = new Activity[activities.size()];
+        return activities.toArray(array);
+    }
+
     public void sortActivities()
     {
         // sort based on start time of activity
@@ -46,9 +52,51 @@ public class Runner
         );
     }
 
-    public Activity[] getArrayOfActivities()
+    public boolean ranMoreThan1kmInSingleRun()
     {
-        Activity[] array = new Activity[activities.size()];
-        return activities.toArray(array);
+        boolean ranMoreThan1km = false;
+
+        for (Activity activity : activities)
+        {
+            if (activity.ranMoreThankOneK())
+            {
+                ranMoreThan1km = true;
+                break;
+            }
+        }
+
+        return ranMoreThan1km;
     }
+
+    public int numberOfTimesRan1km3DaysInARow()
+    {
+        int numberOfTimes = 0;
+        int streak = 0;
+        Activity previousDay = null;
+
+        for (Activity activity : activities)
+        {
+            if (activity.ranMoreThankOneK())
+            {
+                if (previousDay == null)
+                {
+                    streak++;
+                    previousDay = activity;
+                }
+                else
+                {
+
+                }
+            }
+            else
+            {
+                streak = 0;
+                previousDay = null;
+            }
+        }
+
+        return numberOfTimes;
+    }
+
+
 }

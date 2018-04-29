@@ -71,6 +71,21 @@ class RunnerTest
         assertEquals(now, activities[2]);
     }
 
+    @Test
+    void testRunningMoreThan1KM()
+    {
+        Activity now = createAndPopulateRun("first", Activity.RUN, .2, 0);
+        Activity yesterday = createAndPopulateRun("second", Activity.RUN, 5, 86400);
+        Activity twoDaysAgo = createAndPopulateRun("third", Activity.RUN, .3, 2*(86400));
+        runner.addActivity(now);
+        runner.addActivity(twoDaysAgo);
+
+        assertFalse(runner.ranMoreThan1kmInSingleRun());
+
+        runner.addActivity(yesterday);
+        assertTrue(runner.ranMoreThan1kmInSingleRun());
+    }
+
     private Activity createAndPopulateRun(String id, int type, double distance, long secondsAgoStarted)
     {
         Activity activity = new Activity(id, type);
