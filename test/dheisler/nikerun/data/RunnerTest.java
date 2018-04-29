@@ -76,9 +76,7 @@ class RunnerTest
     {
         Activity now = createAndPopulateRun("first", Activity.RUN, .2, 0);
         Activity yesterday = createAndPopulateRun("second", Activity.RUN, 5, 86400);
-        Activity twoDaysAgo = createAndPopulateRun("third", Activity.RUN, .3, 2*(86400));
         runner.addActivity(now);
-        runner.addActivity(twoDaysAgo);
 
         assertFalse(runner.ranMoreThan1kmInSingleRun());
 
