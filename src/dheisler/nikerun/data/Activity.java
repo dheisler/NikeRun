@@ -41,7 +41,20 @@ public class Activity
     public boolean activityStartedBefore(String time)
     {
         Instant otherTime = convertStringToInstant(time);
+
         return startTime.isBefore(otherTime);
+    }
+
+    public int compareTo(Activity other)
+    {
+        Instant otherStart = convertStringToInstant(other.getStartTime());
+
+        if (startTime.equals(otherStart))
+            return 0;
+        else if (startTime.isBefore(otherStart))
+            return -1;
+        else
+            return 1;
     }
 
     public long getLengthOfActivityInSeconds()

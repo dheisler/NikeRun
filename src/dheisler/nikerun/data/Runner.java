@@ -10,6 +10,7 @@ package dheisler.nikerun.data;
 import dheisler.nikerun.data.Activity;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Runner
 {
@@ -40,5 +41,8 @@ public class Runner
     public void sortActivities()
     {
         // sort based on start time of activity
+        activities.sort(
+                (Activity act1, Activity act2) -> act1.compareTo(act2)
+        );
     }
 }
