@@ -48,23 +48,27 @@ class RunnerTest
     }
 
     @Test
-    public void testAddingTwoActivitiesToOneRunnerAreSortedCorrectly()
+    public void testAddingThreeActivitiesToOneRunnerAreSortedCorrectly()
     {
         Activity now = createAndPopulateRun("first", Activity.RUN, .2, 0);
         Activity yesterday = createAndPopulateRun("second", Activity.RUN, 5, 86400);
+        Activity twoDaysAgo = createAndPopulateRun("third", Activity.RUN, 3, 2*(86400));
         runner.addActivity(now);
         runner.addActivity(yesterday);
+        runner.addActivity(twoDaysAgo);
 
 
         Activity[] activities = runner.getArrayOfActivities();
         assertEquals(now, activities[0]);
         assertEquals(yesterday, activities[1]);
+        assertEquals(twoDaysAgo, activities[2]);
 
         runner.sortActivities();
 
         activities = runner.getArrayOfActivities();
-        assertEquals(yesterday, activities[0]);
-        assertEquals(now, activities[1]);
+        assertEquals(twoDaysAgo, activities[0]);
+        assertEquals(yesterday, activities[1]);
+        assertEquals(now, activities[2]);
     }
 
     private Activity createAndPopulateRun(String id, int type, double distance, long secondsAgoStarted)
