@@ -1,5 +1,15 @@
+/**
+ * @author Debbie Heisler
+ *
+ * This class contains the data to represent one activity.  Not all of the
+ * possible fields for an activity are represented.  They were skipped for
+ * brevity since they are not part of the coding challenge questions.
+ *
+ */
+
 package dheisler.nikerun.data;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.time.format.DateTimeFormatter;
 
@@ -26,6 +36,17 @@ public class Activity
     public boolean ranMoreThankOneK()
     {
         return distance > 1;
+    }
+
+    public boolean activityStartedBefore(String time)
+    {
+        Instant otherTime = convertStringToInstant(time);
+        return startTime.isBefore(otherTime);
+    }
+
+    public long getLengthOfActivityInSeconds()
+    {
+        return Duration.between(startTime, endTime).getSeconds();
     }
 
     public int getActivityType()

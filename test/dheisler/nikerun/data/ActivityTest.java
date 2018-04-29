@@ -12,6 +12,7 @@ class ActivityTest
     private static final String endTime = "2017-04-30T18:50:31.166Z";
     private static final double distance5 = 5.011560229879804;
     private static final double distance0 = 0.8650855;
+    private static final long durationOfRun = 2921;
 
     @BeforeEach
     public void setup()
@@ -37,7 +38,7 @@ class ActivityTest
     }
 
     @Test
-    public void addActivityTypeRun()
+    public void addActivityTypeRunAndTestSettings()
     {
         Activity activity = getActivity(activityId, Activity.RUN);
         assertEquals(Activity.RUN, activity.getActivityType());
@@ -46,6 +47,8 @@ class ActivityTest
         assertFalse(activity.ranMoreThankOneK());
         activity.setDistance(distance5);
         assertTrue(activity.ranMoreThankOneK());
+        assertTrue(activity.activityStartedBefore(endTime));
+        assertEquals(durationOfRun, activity.getLengthOfActivityInSeconds());
     }
 
     private Activity getActivity(String activityId, int type)
