@@ -37,13 +37,6 @@ public class Activity
         return distance > 1;
     }
 
-    public boolean activityStartedBefore(String time)
-    {
-        Instant otherTime = convertStringToInstant(time);
-
-        return startTime.isBefore(otherTime);
-    }
-
     public int compareTo(Activity other)
     {
         Instant otherStart = convertStringToInstant(other.getStartTimeToString());

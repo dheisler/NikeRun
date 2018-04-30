@@ -56,7 +56,6 @@ class ActivityTest
         assertFalse(activity.ranMoreThankOneK());
         activity.setDistance(distance5);
         assertTrue(activity.ranMoreThankOneK());
-        assertTrue(activity.activityStartedBefore(endTime));
         assertEquals(durationOfRun, activity.getLengthOfActivityInSeconds());
     }
 
@@ -92,9 +91,11 @@ class ActivityTest
         Activity yesterday = createActivity("yesterday", Activity.RUN, 2, SECONDS_IN_A_DAY);
         Activity twoDaysAgo = createActivity("twoDaysAgo", Activity.RUN, 3, 2 * SECONDS_IN_A_DAY);
 
-       assertTrue(now.wasThisActivityTheDayBefore(yesterday));
-       assertFalse(now.wasThisActivityTheDayBefore(twoDaysAgo));
+        assertTrue(now.wasThisActivityTheDayBefore(yesterday));
+        assertFalse(now.wasThisActivityTheDayBefore(twoDaysAgo));
     }
+
+
 
     private Activity createActivity(String id, int type, double distance, long secondsAgoStarted)
     {
