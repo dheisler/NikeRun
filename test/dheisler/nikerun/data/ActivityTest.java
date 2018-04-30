@@ -93,7 +93,10 @@ class ActivityTest
     public void findFirstMondayOnOrBeforeGivenActivityDate()
     {
         Activity activity = createActivityGivenTimes("testing", Activity.RUN, 1, startTime, endTime);
+        LocalDate monday = activity.getBeginningOfWeekDate();
+        LocalDate expected = LocalDate.of(2017, 4, 24);
 
+        assertEquals(expected, monday);
     }
 
 

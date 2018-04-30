@@ -62,6 +62,43 @@ public class Activity
         return Duration.between(startTime, endTime).getSeconds();
     }
 
+    /**
+     * Gets the date which began the current week based on the date of the start time.
+     * @return The first Monday on or before the start time of this Activity
+     */
+    public LocalDate getBeginningOfWeekDate()
+    {
+        LocalDate date = getStartDate();
+        DayOfWeek dow = date.getDayOfWeek();
+        LocalDate monday = null;
+
+        switch(dow)
+        {
+            case MONDAY:
+                monday = date;
+                break;
+            case TUESDAY:
+                monday = date.minusDays(1);
+                break;
+            case WEDNESDAY:
+                monday = date.minusDays(2);
+                break;
+            case THURSDAY:
+                monday = date.minusDays(3);
+                break;
+            case FRIDAY:
+                monday = date.minusDays(4);
+                break;
+            case SATURDAY:
+                monday = date.minusDays(5);
+                break;
+            case SUNDAY:
+                monday = date.minusDays(6);
+        }
+
+        return monday;
+    }
+
     public int getActivityType()
     {
         return type;
@@ -127,4 +164,5 @@ public class Activity
     {
         return (LocalDateTime.ofInstant(time, ZoneOffset.UTC)).toLocalDate();
     }
+
 }
