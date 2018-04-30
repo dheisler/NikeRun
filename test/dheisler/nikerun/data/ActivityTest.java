@@ -28,10 +28,7 @@ class ActivityTest
     @Test
     public void addActivityTypeOther()
     {
-        Activity activity = new Activity(activityId, Activity.OTHER);
-        addStartEndTimeToActivity(activity);
-        activity.setStartTime(startTime);
-        activity.setEndTime(endTime);
+        Activity activity = createActivityGivenTimes(activityId, Activity.OTHER, 1, startTime, endTime);
         assertEquals(Activity.OTHER, activity.getActivityType());
         assertEquals(startTime, activity.getStartTimeToString());
         assertEquals(endTime, activity.getEndTimeToString());
@@ -47,10 +44,7 @@ class ActivityTest
     @Test
     public void addActivityTypeRunAndTestSettings()
     {
-        Activity activity = new Activity(activityId, Activity.RUN);
-        activity.setStartTime(startTime);
-        activity.setEndTime(endTime);
-        activity.setDistance(distance0);
+        Activity activity = createActivityGivenTimes(activityId, Activity.RUN, distance0, startTime, endTime);
 
         assertEquals(Activity.RUN, activity.getActivityType());
         assertFalse(activity.ranMoreThankOneK());
@@ -62,8 +56,8 @@ class ActivityTest
     @Test
     public void compareTwoActivities()
     {
-        Activity oneDayAgo = createActivity("first", Activity.RUN, 9, SECONDS_IN_A_DAY);
-        Activity twoDaysAgo = createActivity("second", Activity.RUN, 2, 2 * SECONDS_IN_A_DAY);
+        Activity oneDayAgo = createActivityForNow("first", Activity.RUN, 9, SECONDS_IN_A_DAY);
+        Activity twoDaysAgo = createActivityForNow("second", Activity.RUN, 2, 2 * SECONDS_IN_A_DAY);
 
         assertEquals(-1, twoDaysAgo.compareTo(oneDayAgo));
         assertEquals(1, oneDayAgo.compareTo(twoDaysAgo));
@@ -87,17 +81,23 @@ class ActivityTest
     @Test
     public void testOneActivityOccurredTheDayBeforeAnother()
     {
-        Activity now = createActivity("now", Activity.RUN, 1, 0);
-        Activity yesterday = createActivity("yesterday", Activity.RUN, 2, SECONDS_IN_A_DAY);
-        Activity twoDaysAgo = createActivity("twoDaysAgo", Activity.RUN, 3, 2 * SECONDS_IN_A_DAY);
+        Activity now = createActivityForNow("now", Activity.RUN, 1, 0);
+        Activity yesterday = createActivityForNow("yesterday", Activity.RUN, 2, SECONDS_IN_A_DAY);
+        Activity twoDaysAgo = createActivityForNow("twoDaysAgo", Activity.RUN, 3, 2 * SECONDS_IN_A_DAY);
 
         assertTrue(now.wasThisActivityTheDayBefore(yesterday));
         assertFalse(now.wasThisActivityTheDayBefore(twoDaysAgo));
     }
 
+    @Test
+    public void findFirstMondayOnOrBeforeGivenActivityDate()
+    {
+        Activity activity = createActivityGivenTimes("testing", Activity.RUN, 1, startTime, endTime);
+
+    }
 
 
-    private Activity createActivity(String id, int type, double distance, long secondsAgoStarted)
+    private Activity createActivityForNow(String id, int type, double distance, long secondsAgoStarted)
     {
         Instant start = Instant.now().minusSeconds(secondsAgoStarted);
         Instant end = start.plusSeconds(3600); // activity lasted an hour
@@ -110,9 +110,15 @@ class ActivityTest
         return activity;
     }
 
-    private void addStartEndTimeToActivity(Activity activity)
+
+    private Activity createActivityGivenTimes(String id, int type,
+                                              double distance, String start, String end)
     {
+        Activity activity = new Activity(id, type);
+        activity.setDistance(distance);
+        activity.setStartTime(start);
+        activity.setEndTime(end);
 
+        return activity;
     }
-
 }
