@@ -3,9 +3,9 @@ package dheisler.nikerun.data;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.DayOfWeek;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -30,6 +30,8 @@ class ActivityTest
     {
         Activity activity = new Activity(activityId, Activity.OTHER);
         addStartEndTimeToActivity(activity);
+        activity.setStartTime(startTime);
+        activity.setEndTime(endTime);
         assertEquals(Activity.OTHER, activity.getActivityType());
         assertEquals(startTime, activity.getStartTimeToString());
         assertEquals(endTime, activity.getEndTimeToString());
@@ -80,6 +82,7 @@ class ActivityTest
         assertEquals(30, activityDate.getDayOfMonth());
         assertEquals(4, activityDate.getMonthValue());
         assertEquals(2017, activityDate.getYear());
+        assertEquals(DayOfWeek.SUNDAY, activityDate.getDayOfWeek());
     }
 
     @Test
@@ -89,8 +92,8 @@ class ActivityTest
         Activity yesterday = createActivity("yesterday", Activity.RUN, 2, SECONDS_IN_A_DAY);
         Activity twoDaysAgo = createActivity("twoDaysAgo", Activity.RUN, 3, 2 * SECONDS_IN_A_DAY);
 
-       // assertTrue(now.wasThisActivityYesterday(yesterday));
-       // assertFalse(now.wasThisActivityYesterday(twoDaysAgo));
+       assertTrue(now.wasThisActivityTheDayBefore(yesterday));
+       assertFalse(now.wasThisActivityTheDayBefore(twoDaysAgo));
     }
 
     private Activity createActivity(String id, int type, double distance, long secondsAgoStarted)

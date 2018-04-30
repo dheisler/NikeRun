@@ -56,9 +56,12 @@ public class Activity
             return 1;
     }
 
-    public boolean wasThisActivityYesterday(Activity yesterday)
+    public boolean wasThisActivityTheDayBefore(Activity yesterday)
     {
-        return false;
+        LocalDate dateBefore = yesterday.getStartDate();
+        LocalDate mydateOneDayBefore = getStartDate().minusDays(1);
+
+        return mydateOneDayBefore.equals(dateBefore);
     }
 
     public long getLengthOfActivityInSeconds()
