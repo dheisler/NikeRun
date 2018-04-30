@@ -93,6 +93,14 @@ class ActivityTest
         assertEquals(expected, monday);
     }
 
+    @Test
+    public void whatIsDistanceForOtherActivity()
+    {
+        Activity activity = new Activity("testing", Activity.OTHER);
+
+        assertEquals(0, activity.getDistance());
+    }
+
 
     private Activity createActivityForNow(String id, int type, double distance, long secondsAgoStarted)
     {
