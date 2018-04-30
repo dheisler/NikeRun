@@ -7,11 +7,8 @@
  */
 package dheisler.nikerun.data;
 
-import dheisler.nikerun.data.Activity;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class Runner
 {

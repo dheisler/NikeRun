@@ -1,6 +1,5 @@
 package dheisler.nikerun.data;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.DayOfWeek;
@@ -19,12 +18,6 @@ class ActivityTest
     private static final long durationOfRun = 2921;
     private static final int SECONDS_IN_A_DAY = 86400;
 
-    @BeforeEach
-    public void setup()
-    {
-
-    }
-
     @Test
     public void addActivityTypeOther()
     {
@@ -32,6 +25,7 @@ class ActivityTest
         assertEquals(Activity.OTHER, activity.getActivityType());
         assertEquals(startTime, activity.getStartTimeToString());
         assertEquals(endTime, activity.getEndTimeToString());
+        assertEquals(activityId, activity.getActivityId());
     }
 
     @Test

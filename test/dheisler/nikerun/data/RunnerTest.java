@@ -11,7 +11,6 @@ class RunnerTest
 {
     private static final int SECONDS_IN_A_DAY = 86400;
     private static String userId = "auserid930";
-    private static String activityId = "shortactivity";
     private Runner runner;
 
     @BeforeEach
@@ -30,7 +29,7 @@ class RunnerTest
     @Test
     public void testAddingOneOtherActivityToOneRunner()
     {
-        Activity activity = new Activity(activityId, Activity.OTHER);
+        Activity activity = new Activity("one", Activity.OTHER);
 
         runner.addActivity(activity);
 
@@ -295,6 +294,11 @@ class RunnerTest
         assertEquals(2, runner.getNumberOfTimesRan10KInCalendarWeek());
     }
 
+    @Test
+    public void testNumberOfPoundsRanOff()
+    {
+
+    }
 
 
     private Activity createNewRun(String id, int type, double distance, long secondsAgoStarted)
