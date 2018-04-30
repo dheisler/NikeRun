@@ -81,11 +81,28 @@ public class Runner
                 if (previousDay == null)
                 {
                     streak++;
-                    previousDay = activity;
                 }
                 else
                 {
+                    if (activity.wasThisActivityTheDayBefore(previousDay))
+                    {
+                        streak++;
+                    }
+                    else
+                    {
+                        streak = 1;
+                    }
+                }
 
+                if (streak == 3)
+                {
+                    numberOfTimes++;
+                    streak = 0;
+                    previousDay = null;
+                }
+                else
+                {
+                    previousDay = activity;
                 }
             }
             else

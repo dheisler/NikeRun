@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class RunnerTest
 {
+    private static final int SECONDS_IN_A_DAY = 86400;
     private static String userId = "auserid930";
     private static String activityId = "shortactivity";
     private Runner runner;
@@ -39,9 +40,9 @@ class RunnerTest
     @Test
     public void testAddingTwoRunActivitiesToOneRunner()
     {
-        Activity activity = createAndPopulateRun("first", Activity.RUN, .2, 0);
+        Activity activity = createNewRun("first", Activity.RUN, .2, 0);
         runner.addActivity(activity);
-        activity = createAndPopulateRun("second", Activity.RUN, 5, 86400);
+        activity = createNewRun("second", Activity.RUN, 5, 86400);
         runner.addActivity(activity);
 
         assertEquals(2, runner.getNumberofActivities());
@@ -50,9 +51,9 @@ class RunnerTest
     @Test
     public void testAddingThreeActivitiesToOneRunnerAreSortedCorrectly()
     {
-        Activity now = createAndPopulateRun("first", Activity.RUN, .2, 0);
-        Activity yesterday = createAndPopulateRun("second", Activity.RUN, 5, 86400);
-        Activity twoDaysAgo = createAndPopulateRun("third", Activity.RUN, 3, 2*(86400));
+        Activity now = createNewRun("first", Activity.RUN, .2, 0);
+        Activity yesterday = createNewRun("second", Activity.RUN, 5, SECONDS_IN_A_DAY);
+        Activity twoDaysAgo = createNewRun("third", Activity.RUN, 3, 2*(SECONDS_IN_A_DAY));
         runner.addActivity(now);
         runner.addActivity(yesterday);
         runner.addActivity(twoDaysAgo);
@@ -72,10 +73,10 @@ class RunnerTest
     }
 
     @Test
-    void testRunningMoreThan1KM()
+    public void testRunningMoreThan1KM()
     {
-        Activity now = createAndPopulateRun("first", Activity.RUN, .2, 0);
-        Activity yesterday = createAndPopulateRun("second", Activity.RUN, 5, 86400);
+        Activity now = createNewRun("first", Activity.RUN, .2, 0);
+        Activity yesterday = createNewRun("second", Activity.RUN, 5, SECONDS_IN_A_DAY);
         runner.addActivity(now);
 
         assertFalse(runner.ranMoreThan1kmInSingleRun());
@@ -84,7 +85,147 @@ class RunnerTest
         assertTrue(runner.ranMoreThan1kmInSingleRun());
     }
 
-    private Activity createAndPopulateRun(String id, int type, double distance, long secondsAgoStarted)
+    @Test
+    public void testRunningAtLeast1Km2DaysInARow()
+    {
+        Activity today = createNewRun("today", Activity.RUN, 1, 0);
+        Activity yesterday = createNewRun("yesterday", Activity.RUN, 2, SECONDS_IN_A_DAY);
+
+        runner.addActivity(today);
+        runner.addActivity(yesterday);
+        runner.sortActivities();
+
+        assertEquals(0, runner.numberOfTimesRan1km3DaysInARow());
+    }
+
+    @Test
+    public void testRunningAtLeast1Km3DaysInARow()
+    {
+        Activity today = createNewRun("today", Activity.RUN, 1.1, 0);
+        Activity yesterday = createNewRun("yesterday", Activity.RUN, 2, SECONDS_IN_A_DAY);
+        Activity dayBeforeYesterday = createNewRun("dayBeforeYesterday", Activity.RUN, 3, 2 * SECONDS_IN_A_DAY);
+
+        runner.addActivity(today);
+        runner.addActivity(yesterday);
+        runner.addActivity(dayBeforeYesterday);
+        runner.sortActivities();
+
+        assertEquals(1, runner.numberOfTimesRan1km3DaysInARow());
+    }
+
+    @Test
+    public void testRunningAtLeast1Km4DaysInARow()
+    {
+        Activity today = createNewRun("today", Activity.RUN, 1.1, 0);
+        Activity yesterday = createNewRun("yesterday", Activity.RUN, 2, SECONDS_IN_A_DAY);
+        Activity dayBeforeYesterday = createNewRun("dayBeforeYesterday", Activity.RUN, 3, 2 * SECONDS_IN_A_DAY);
+        Activity threeDaysAGo = createNewRun("threeDaysAgo", Activity.RUN, 2, 3 * SECONDS_IN_A_DAY);
+
+        runner.addActivity(today);
+        runner.addActivity(yesterday);
+        runner.addActivity(dayBeforeYesterday);
+        runner.addActivity(threeDaysAGo);
+        runner.sortActivities();
+
+        assertEquals(1, runner.numberOfTimesRan1km3DaysInARow());
+    }
+
+    @Test
+    public void testRunningAtLeast1Km6DaysInARow()
+    {
+        Activity today = createNewRun("today", Activity.RUN, 1.1, 0);
+        Activity yesterday = createNewRun("yesterday", Activity.RUN, 2, SECONDS_IN_A_DAY);
+        Activity twoDaysAgo = createNewRun("dayBeforeYesterday", Activity.RUN, 3, 2 * SECONDS_IN_A_DAY);
+        Activity threeDaysAgo = createNewRun("daybeforethat", Activity.RUN, 2, 3 * SECONDS_IN_A_DAY);
+        Activity fourDaysAgo = createNewRun("fourDaysAgo", Activity.RUN, 5, 4 * SECONDS_IN_A_DAY);
+        Activity fiveDaysAgo = createNewRun("fiveDaysAgo", Activity.RUN, 1.1, 5 * SECONDS_IN_A_DAY);
+
+        runner.addActivity(today);
+        runner.addActivity(yesterday);
+        runner.addActivity(twoDaysAgo);
+        runner.addActivity(threeDaysAgo);
+        runner.addActivity(fourDaysAgo);
+        runner.addActivity(fiveDaysAgo);
+        runner.sortActivities();
+
+        assertEquals(2, runner.numberOfTimesRan1km3DaysInARow());
+    }
+
+    @Test
+    public void testRunningAtLeast1Km4DaysNotInARow()
+    {
+        Activity today = createNewRun("today", Activity.RUN, 1.1, 0);
+        Activity yesterday = createNewRun("yesterday", Activity.RUN, 2, SECONDS_IN_A_DAY);
+        Activity threeDaysAgo = createNewRun("daybeforethat", Activity.RUN, 2, 3 * SECONDS_IN_A_DAY);
+        Activity fourDaysAgo = createNewRun("fourDaysAgo", Activity.RUN, 5, 4 * SECONDS_IN_A_DAY);
+
+        runner.addActivity(today);
+        runner.addActivity(yesterday);
+        runner.addActivity(threeDaysAgo);
+        runner.addActivity(fourDaysAgo);
+        runner.sortActivities();
+
+        assertEquals(0, runner.numberOfTimesRan1km3DaysInARow());
+    }
+
+    @Test
+    public void testRunningAtLeast1Km5DaysNotInARow()
+    {
+        Activity today = createNewRun("today", Activity.RUN, 1.1, 0);
+        Activity yesterday = createNewRun("yesterday", Activity.RUN, 2, SECONDS_IN_A_DAY);
+        Activity twoDaysAgo = createNewRun("dayBeforeYesterday", Activity.RUN, 3, 2 * SECONDS_IN_A_DAY);
+        Activity fourDaysAgo = createNewRun("fourDaysAgo", Activity.RUN, 5, 4 * SECONDS_IN_A_DAY);
+        Activity fiveDaysAgo = createNewRun("fiveDaysAgo", Activity.RUN, 1.1, 5 * SECONDS_IN_A_DAY);
+
+        runner.addActivity(today);
+        runner.addActivity(yesterday);
+        runner.addActivity(twoDaysAgo);
+        runner.addActivity(fourDaysAgo);
+        runner.addActivity(fiveDaysAgo);
+        runner.sortActivities();
+
+        assertEquals(1, runner.numberOfTimesRan1km3DaysInARow());
+    }
+
+    @Test
+    public void testRunning4DaysInARowOne1Km()
+    {
+        Activity today = createNewRun("today", Activity.RUN, 1.1, 0);
+        Activity yesterday = createNewRun("yesterday", Activity.RUN, 2, SECONDS_IN_A_DAY);
+        Activity dayBeforeYesterday = createNewRun("dayBeforeYesterday", Activity.RUN, 1, 2 * SECONDS_IN_A_DAY);
+        Activity threeDaysAGo = createNewRun("threeDaysAgo", Activity.RUN, 2, 3 * SECONDS_IN_A_DAY);
+
+        runner.addActivity(today);
+        runner.addActivity(yesterday);
+        runner.addActivity(dayBeforeYesterday);
+        runner.addActivity(threeDaysAGo);
+        runner.sortActivities();
+
+        assertEquals(0, runner.numberOfTimesRan1km3DaysInARow());
+    }
+
+    @Test
+    public void testRunning6DaysInARowOne1Km()
+    {
+        Activity today = createNewRun("today", Activity.RUN, 1, 0);
+        Activity yesterday = createNewRun("yesterday", Activity.RUN, 2, SECONDS_IN_A_DAY);
+        Activity twoDaysAgo = createNewRun("dayBeforeYesterday", Activity.RUN, 3, 2 * SECONDS_IN_A_DAY);
+        Activity threeDaysAgo = createNewRun("daybeforethat", Activity.RUN, 2, 3 * SECONDS_IN_A_DAY);
+        Activity fourDaysAgo = createNewRun("fourDaysAgo", Activity.RUN, 5, 4 * SECONDS_IN_A_DAY);
+        Activity fiveDaysAgo = createNewRun("fiveDaysAgo", Activity.RUN, 1.1, 5 * SECONDS_IN_A_DAY);
+
+        runner.addActivity(today);
+        runner.addActivity(yesterday);
+        runner.addActivity(twoDaysAgo);
+        runner.addActivity(threeDaysAgo);
+        runner.addActivity(fourDaysAgo);
+        runner.addActivity(fiveDaysAgo);
+        runner.sortActivities();
+
+        assertEquals(1, runner.numberOfTimesRan1km3DaysInARow());
+    }
+
+    private Activity createNewRun(String id, int type, double distance, long secondsAgoStarted)
     {
         Activity activity = new Activity(id, type);
         Instant now = Instant.now().minusSeconds(secondsAgoStarted);

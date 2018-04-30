@@ -13,3 +13,5 @@ And I am running into another problem with dates.  I need to be able see if acti
 
 In case you are wondering, I chose to save everything as a java.time.Instant because of the format of the original start and end time.  This was the only built in object that could parse it automatically.  I also thought I needed to keep this time in the same format when I print it out into json again.
 
+4/30/2018
+I realize I am writing inefficent code to generate the number of times ran 1km for three days and ran 10k in a week.  To be efficient, go through the actvities once and calculate both.  Right now, I am calculating each in their own run of the actviites.
