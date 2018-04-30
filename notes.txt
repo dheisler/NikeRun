@@ -15,3 +15,5 @@ In case you are wondering, I chose to save everything as a java.time.Instant bec
 
 4/30/2018
 I realize I am writing inefficent code to generate the number of times ran 1km for three days and ran 10k in a week.  To be efficient, go through the actvities once and calculate both.  Right now, I am calculating each in their own run of the actviites.
+
+After writing out and testing the code for the askes, I did not include the type of run it was.  Depending on the type, some information is missing.  Will need to look into thisl

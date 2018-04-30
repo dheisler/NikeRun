@@ -164,5 +164,4 @@ public class Activity
     {
         return (LocalDateTime.ofInstant(time, ZoneOffset.UTC)).toLocalDate();
     }
-
 }

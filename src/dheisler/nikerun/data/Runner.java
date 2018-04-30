@@ -66,7 +66,19 @@ public class Runner
         return ranMoreThan1km;
     }
 
-    public int numberOfTimesRanMoreThan1km3DaysInARow()
+
+    public int getNumberOfSecondsSpentOnActivities()
+    {
+        int secondsSpent = 0;
+
+        for (Activity activity : activities)
+        {
+            secondsSpent += activity.getLengthOfActivityInSeconds();
+        }
+        return secondsSpent;
+    }
+
+    public int getNumberOfTimesRanMoreThan1km3DaysInARow()
     {
         int numberOfTimes = 0;
         int streak = 0;
