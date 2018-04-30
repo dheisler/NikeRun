@@ -95,7 +95,7 @@ class RunnerTest
         runner.addActivity(yesterday);
         runner.sortActivities();
 
-        assertEquals(0, runner.numberOfTimesRan1km3DaysInARow());
+        assertEquals(0, runner.numberOfTimesRanMoreThan1km3DaysInARow());
     }
 
     @Test
@@ -110,7 +110,7 @@ class RunnerTest
         runner.addActivity(dayBeforeYesterday);
         runner.sortActivities();
 
-        assertEquals(1, runner.numberOfTimesRan1km3DaysInARow());
+        assertEquals(1, runner.numberOfTimesRanMoreThan1km3DaysInARow());
     }
 
     @Test
@@ -127,7 +127,7 @@ class RunnerTest
         runner.addActivity(threeDaysAGo);
         runner.sortActivities();
 
-        assertEquals(1, runner.numberOfTimesRan1km3DaysInARow());
+        assertEquals(1, runner.numberOfTimesRanMoreThan1km3DaysInARow());
     }
 
     @Test
@@ -148,7 +148,7 @@ class RunnerTest
         runner.addActivity(fiveDaysAgo);
         runner.sortActivities();
 
-        assertEquals(2, runner.numberOfTimesRan1km3DaysInARow());
+        assertEquals(2, runner.numberOfTimesRanMoreThan1km3DaysInARow());
     }
 
     @Test
@@ -165,7 +165,7 @@ class RunnerTest
         runner.addActivity(fourDaysAgo);
         runner.sortActivities();
 
-        assertEquals(0, runner.numberOfTimesRan1km3DaysInARow());
+        assertEquals(0, runner.numberOfTimesRanMoreThan1km3DaysInARow());
     }
 
     @Test
@@ -184,7 +184,7 @@ class RunnerTest
         runner.addActivity(fiveDaysAgo);
         runner.sortActivities();
 
-        assertEquals(1, runner.numberOfTimesRan1km3DaysInARow());
+        assertEquals(1, runner.numberOfTimesRanMoreThan1km3DaysInARow());
     }
 
     @Test
@@ -201,7 +201,7 @@ class RunnerTest
         runner.addActivity(threeDaysAGo);
         runner.sortActivities();
 
-        assertEquals(0, runner.numberOfTimesRan1km3DaysInARow());
+        assertEquals(0, runner.numberOfTimesRanMoreThan1km3DaysInARow());
     }
 
     @Test
@@ -222,7 +222,7 @@ class RunnerTest
         runner.addActivity(fiveDaysAgo);
         runner.sortActivities();
 
-        assertEquals(1, runner.numberOfTimesRan1km3DaysInARow());
+        assertEquals(1, runner.numberOfTimesRanMoreThan1km3DaysInARow());
     }
 
     private Activity createNewRun(String id, int type, double distance, long secondsAgoStarted)

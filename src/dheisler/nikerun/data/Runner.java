@@ -68,7 +68,7 @@ public class Runner
         return ranMoreThan1km;
     }
 
-    public int numberOfTimesRan1km3DaysInARow()
+    public int numberOfTimesRanMoreThan1km3DaysInARow()
     {
         int numberOfTimes = 0;
         int streak = 0;
@@ -78,42 +78,39 @@ public class Runner
         {
             if (activity.ranMoreThankOneK())
             {
-                if (previousDay == null)
+                if ((previousDay == null) || (activity.wasThisActivityTheDayBefore(previousDay)))
                 {
                     streak++;
                 }
                 else
                 {
-                    if (activity.wasThisActivityTheDayBefore(previousDay))
-                    {
-                        streak++;
-                    }
-                    else
-                    {
-                        streak = 1;
-                    }
+                    // starting a new streak with today as first day of streak
+                    streak = 1;
                 }
 
                 if (streak == 3)
                 {
                     numberOfTimes++;
-                    streak = 0;
-                    previousDay = null;
+                    resetStreak(streak, previousDay);
                 }
                 else
                 {
+                    // new streak with today as first day or in middle of streak
                     previousDay = activity;
                 }
             }
             else
             {
-                streak = 0;
-                previousDay = null;
+                resetStreak(streak, previousDay);
             }
         }
 
         return numberOfTimes;
     }
 
-
+    private void resetStreak(int streak, Activity activity)
+    {
+        streak = 0;
+        activity = null;
+    }
 }
