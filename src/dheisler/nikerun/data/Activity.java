@@ -9,8 +9,7 @@
 
 package dheisler.nikerun.data;
 
-import java.time.Duration;
-import java.time.Instant;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 
 public class Activity
@@ -47,7 +46,7 @@ public class Activity
 
     public int compareTo(Activity other)
     {
-        Instant otherStart = convertStringToInstant(other.getStartTime());
+        Instant otherStart = convertStringToInstant(other.getStartTimeToString());
 
         if (startTime.equals(otherStart))
             return 0;
@@ -77,12 +76,17 @@ public class Activity
         return activityId;
     }
 
-    public String getStartTime()
+    public String getStartTimeToString()
     {
         return startTime.toString();
     }
 
-    public String getEndTime()
+    public LocalDate getStartDate()
+    {
+        return convertInstantToLocalDate(startTime);
+    }
+
+    public String getEndTimeToString()
     {
         return endTime.toString();
     }
@@ -123,4 +127,8 @@ public class Activity
         return Instant.from(dtf.parse(instant));
     }
 
+    private LocalDate convertInstantToLocalDate(Instant time)
+    {
+        return (LocalDateTime.ofInstant(time, ZoneOffset.UTC)).toLocalDate();
+    }
 }
