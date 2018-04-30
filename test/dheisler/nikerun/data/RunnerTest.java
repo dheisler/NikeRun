@@ -3,7 +3,7 @@ package dheisler.nikerun.data;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.time.Instant;
+import java.time.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -225,6 +225,78 @@ class RunnerTest
         assertEquals(1, runner.numberOfTimesRanMoreThan1km3DaysInARow());
     }
 
+    @Test
+    public void testNumberOfTimesRunningMoreThan10kInACalendarWeekOneRunLessThan10K()
+    {
+        Activity today = createNewRun("today", Activity.RUN, 1, 0);
+        runner.addActivity(today);
+        assertEquals(0, runner.getNumberOfTimesRan10KInCalendarWeek());
+    }
+
+    @Test
+    public void testNumberOfTimesRunningMoreThan10KinCalendarWeekOneRunMoreThan10k()
+    {
+        Activity today = createNewRun("today", Activity.RUN, 11, 0);
+        runner.addActivity(today);
+        assertEquals(1, runner.getNumberOfTimesRan10KInCalendarWeek());
+    }
+
+    @Test
+    public void testNumberOfTimesRunningMoreThan10kInCalendarWeekSumMoreThan10kMoreThanOneRun()
+    {
+        Activity one = createNewRunWithStartDate("one", Activity.RUN, 5,
+                LocalDate.of(2018, 4, 23));
+        Activity two = createNewRunWithStartDate("two", Activity.RUN, 6,
+                LocalDate.of(2018, 4, 25));
+
+        runner.addActivity(one);
+        runner.addActivity(two);
+        runner.sortActivities();
+
+        assertEquals(1, runner.getNumberOfTimesRan10KInCalendarWeek());
+    }
+
+    @Test
+    public void testNumberOfTimesRunningMoreThan10InCalenderWeekTwoRunsInDifferentWeeks()
+    {
+        Activity one = createNewRunWithStartDate("one", Activity.RUN, 5,
+                LocalDate.of(2018, 4, 23));
+        Activity two = createNewRunWithStartDate("two", Activity.RUN, 6,
+                LocalDate.of(2018, 4, 30));
+
+        runner.addActivity(one);
+        runner.addActivity(two);
+        runner.sortActivities();
+
+        assertEquals(0, runner.getNumberOfTimesRan10KInCalendarWeek());
+    }
+
+    @Test
+    public void testNumberOfTimesRunningMoreThan10kInCalenderWeekTwoWeeksInRow()
+    {
+        Activity one = createNewRunWithStartDate("one", Activity.RUN, 5,
+                LocalDate.of(2018, 4, 24));
+        Activity two = createNewRunWithStartDate("two", Activity.RUN, 9,
+                LocalDate.of(2018, 4, 23));
+        Activity three = createNewRunWithStartDate("three", Activity.RUN, 3,
+                LocalDate.of(2018, 4, 10));
+        Activity four = createNewRunWithStartDate("four", Activity.RUN, 4,
+                LocalDate.of(2018, 4, 12));
+        Activity five = createNewRunWithStartDate("five", Activity.RUN, 4,
+                LocalDate.of(2018, 4, 13));
+
+        runner.addActivity(one);
+        runner.addActivity(two);
+        runner.addActivity(three);
+        runner.addActivity(four);
+        runner.addActivity(five);
+        runner.sortActivities();
+
+        assertEquals(2, runner.getNumberOfTimesRan10KInCalendarWeek());
+    }
+
+
+
     private Activity createNewRun(String id, int type, double distance, long secondsAgoStarted)
     {
         Activity activity = new Activity(id, type);
@@ -234,6 +306,21 @@ class RunnerTest
         activity.setDistance(distance);
         activity.setStartTime(now.toString());
         activity.setEndTime(then.toString());
+
+        return activity;
+    }
+
+    private Activity createNewRunWithStartDate(String id, int type, double distance, LocalDate date)
+    {
+        Activity activity = new Activity(id, type);
+        LocalTime startTime = LocalTime.NOON;
+        LocalTime endTime = startTime.plusHours(1);
+        LocalDateTime startDayTime = LocalDateTime.of(date, startTime);
+        LocalDateTime endDayTime = LocalDateTime.of(date, endTime);
+
+        activity.setDistance(distance);
+        activity.setStartTime(startDayTime.toInstant(ZoneOffset.UTC).toString());
+        activity.setEndTime(endDayTime.toInstant(ZoneOffset.UTC).toString());
 
         return activity;
     }

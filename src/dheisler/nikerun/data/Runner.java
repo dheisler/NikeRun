@@ -9,6 +9,7 @@ package dheisler.nikerun.data;
 
 import dheisler.nikerun.data.Activity;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -108,6 +109,46 @@ public class Runner
         return numberOfTimes;
     }
 
+    public int getNumberOfTimesRan10KInCalendarWeek()
+    {
+        int numberOfTimesMoreThan10K = 0;
+        double distanceTotal = 0;
+        LocalDate monday = LocalDate.now();
+
+        for (Activity activity: activities)
+        {
+            if (monday.equals(activity.getBeginningOfWeekDate()))
+            {
+                distanceTotal += activity.getDistance();
+            }
+            else
+            {
+                // check old distance total before resetting it.
+                if (distanceTotal > 10)
+                {
+                    numberOfTimesMoreThan10K++;
+                }
+
+                monday = activity.getBeginningOfWeekDate();
+                distanceTotal = activity.getDistance();
+            }
+        }
+
+        // check once more when out of activities
+        if (distanceTotal > 10)
+        {
+            numberOfTimesMoreThan10K++;
+        }
+
+
+        return numberOfTimesMoreThan10K;
+    }
+
+    /**
+     * Resets the streak for running more than 1k each of three days in a row.
+     * @param streak
+     * @param activity
+     */
     private void resetStreak(int streak, Activity activity)
     {
         streak = 0;
