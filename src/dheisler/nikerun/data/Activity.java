@@ -57,6 +57,11 @@ public class Activity
             return 1;
     }
 
+    public boolean wasThisActivityYesterday(Activity yesterday)
+    {
+        return false;
+    }
+
     public long getLengthOfActivityInSeconds()
     {
         return Duration.between(startTime, endTime).getSeconds();

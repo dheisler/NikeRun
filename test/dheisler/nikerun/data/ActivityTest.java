@@ -15,6 +15,7 @@ class ActivityTest
     private static final double distance5 = 5.011560229879804;
     private static final double distance0 = 0.8650855;
     private static final long durationOfRun = 2921;
+    private static final int SECONDS_IN_A_DAY = 86400;
 
     @BeforeEach
     public void setup()
@@ -58,13 +59,24 @@ class ActivityTest
     @Test
     public void compareTwoActivities()
     {
-        Activity oneDayAgo = createActivity("first", Activity.RUN, 9, 86400); // a day ago
-        Activity twoDaysAgo = createActivity("second", Activity.RUN, 2, 2*(86400));  // two days ago
+        Activity oneDayAgo = createActivity("first", Activity.RUN, 9, SECONDS_IN_A_DAY);
+        Activity twoDaysAgo = createActivity("second", Activity.RUN, 2, 2 * SECONDS_IN_A_DAY);
 
         assertEquals(-1, twoDaysAgo.compareTo(oneDayAgo));
         assertEquals(1, oneDayAgo.compareTo(twoDaysAgo));
         assertEquals(0, oneDayAgo.compareTo(oneDayAgo));
         assertNotEquals(0, oneDayAgo.compareTo(twoDaysAgo));
+    }
+
+    @Test
+    public void testOneActivityOccurredTheDayBeforeAnother()
+    {
+        Activity now = createActivity("now", Activity.RUN, 1, 0);
+        Activity yesterday = createActivity("yesterday", Activity.RUN, 2, SECONDS_IN_A_DAY);
+        Activity twoDaysAgo = createActivity("twoDaysAgo", Activity.RUN, 3, 2 * SECONDS_IN_A_DAY);
+
+        assertTrue(now.wasThisActivityYesterday(yesterday));
+        assertFalse(now.wasThisActivityYesterday(twoDaysAgo));
     }
 
     private Activity createActivity(String id, int type, double distance, long secondsAgoStarted)
