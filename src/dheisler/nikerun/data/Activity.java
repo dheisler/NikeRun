@@ -6,7 +6,6 @@
  * brevity since they are not part of the coding challenge questions.
  *
  */
-
 package dheisler.nikerun.data;
 
 import java.time.*;
@@ -24,8 +23,6 @@ public class Activity
     private Instant startTime;
     private Instant endTime;
     private double distance;
-    private double speed;
-
 
     public Activity(String activityId, int type)
     {
@@ -38,6 +35,12 @@ public class Activity
         return distance > 1;
     }
 
+    /**
+     *
+     * @param other Activity to compare start time
+     * @return 0 if both start times are equal, 1 if this start time is after
+     * other start time, -1 is this start time is before other start time.
+     */
     public int compareTo(Activity other)
     {
         Instant otherStart = convertStringToInstant(other.getStartTimeToString());
@@ -130,11 +133,6 @@ public class Activity
         return distance;
     }
 
-    public double getSpeed()
-    {
-        return speed;
-    }
-
     public void setStartTime(String startTime)
     {
         this.startTime = convertStringToInstant(startTime);
@@ -148,11 +146,6 @@ public class Activity
     public void setDistance(double distance)
     {
         this.distance = distance;
-    }
-
-    public void setSpeed(double speed)
-    {
-        this.speed = speed;
     }
 
     private Instant convertStringToInstant(String instant)

@@ -1,7 +1,7 @@
 /**
  * author Debbie Heisler
  *
- * This class contains the runing data for one runner.
+ * This class contains the data for one runner.
  * It also contains some of the methods needed to answer the questions in
  * the coding challenge.
  */
@@ -36,17 +36,16 @@ public class Runner
         return activities.size();
     }
 
-    public Activity[] getArrayOfActivities()
+    public Activity[] getActivities()
     {
-        Activity[] array = new Activity[activities.size()];
-        return activities.toArray(array);
+        return activities.toArray(new Activity[activities.size()]);
     }
 
     public void sortActivities()
     {
         // sort based on start time of activity
         activities.sort(
-                (Activity act1, Activity act2) -> act1.compareTo(act2)
+                (Activity activity1, Activity activity2) -> activity1.compareTo(activity2)
         );
     }
 
@@ -132,7 +131,7 @@ public class Runner
             }
             else
             {
-                // check old distance total before resetting it.
+                // check distance total before resetting it for new week.
                 if (distanceTotal > 10)
                 {
                     numberOfTimesMoreThan10K++;
@@ -162,10 +161,5 @@ public class Runner
     {
         streak = 0;
         activity = null;
-    }
-
-    public Activity[] getActivities()
-    {
-        return activities.toArray(new Activity[activities.size()]);
     }
 }

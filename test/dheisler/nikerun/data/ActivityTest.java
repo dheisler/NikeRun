@@ -1,6 +1,7 @@
 /**
  * author Debbie Heisler
- * This class tests the Activity.java class
+ *
+ * This class tests the Activity.java class methods and logic.
  */
 
 package dheisler.nikerun.data;

@@ -1,12 +1,11 @@
 /**
  * author Debbie Heisler
  *
- * This class tests the Runner.java class
+ * This class tests the Runner.java class methods and logic.
  */
 
 package dheisler.nikerun.data;
 
-import dheisler.nikerun.data.Activity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -73,14 +72,14 @@ class RunnerTest
         runner.addActivity(twoDaysAgo);
 
 
-        Activity[] activities = runner.getArrayOfActivities();
+        Activity[] activities = runner.getActivities();
         assertEquals(now, activities[0]);
         assertEquals(yesterday, activities[1]);
         assertEquals(twoDaysAgo, activities[2]);
 
         runner.sortActivities();
 
-        activities = runner.getArrayOfActivities();
+        activities = runner.getActivities();
         assertEquals(twoDaysAgo, activities[0]);
         assertEquals(yesterday, activities[1]);
         assertEquals(now, activities[2]);

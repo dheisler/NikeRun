@@ -1,5 +1,11 @@
 /**
  * author Debbie Heisler
+ *
+ * This class should be broken up so that it does not open the file itself.
+ * It should only be dealing with a string containing JSON.
+ *
+ * This class should connect to a datasource interface, so that it can parse
+ * from anywhere.  It is set up like this due to time constraints.
  */
 package dheisler.nikerun.util;
 
@@ -14,9 +20,14 @@ import java.io.FileReader;
 public class ParseRunnerFromJsonFile
 {
 
-    public static Runner parseFile(String fn)
+    /**
+     *
+     * @param fileName JSON file to open
+     * @return file parsed into Runner object
+     */
+    public static Runner parseFile(String fileName)
     {
-        JSONObject jsonObject = getJSONObjectFromFile(fn);
+        JSONObject jsonObject = getJSONObjectFromFile(fileName);
 
         String runnerId = (String) jsonObject.get("user_id");
         Runner runner = new Runner(runnerId);
