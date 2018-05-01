@@ -163,4 +163,9 @@ public class Runner
         streak = 0;
         activity = null;
     }
+
+    public Activity[] getActivities()
+    {
+        return activities.toArray(new Activity[activities.size()]);
+    }
 }

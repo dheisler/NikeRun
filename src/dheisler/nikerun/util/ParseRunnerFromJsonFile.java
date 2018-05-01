@@ -4,11 +4,8 @@ import dheisler.nikerun.data.Activity;
 import dheisler.nikerun.data.Runner;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 
 public class ParseRunnerFromJsonFile
 {
@@ -35,6 +32,8 @@ public class ParseRunnerFromJsonFile
         {
             activity.setDistance(Double.valueOf(distance.toString()));
         }
+
+        runner.addActivity(activity);
 
         return runner;
     }

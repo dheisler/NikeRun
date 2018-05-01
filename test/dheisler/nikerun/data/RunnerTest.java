@@ -350,6 +350,16 @@ class RunnerTest
         assertEquals(3 * 3600, runner.getNumberOfSecondsSpentOnActivities());
     }
 
+    @Test
+    public void testToGetOneActivity()
+    {
+        Activity one = createNewActivity("one", Activity.RUN, 12.1, 0);
+        runner.addActivity(one);
+        Activity[] activites = runner.getActivities();
+
+        assertEquals(one, activites[0]);
+    }
+
 
     private Activity createNewActivity(String id, int type, double distance, long secondsAgoStarted)
     {
