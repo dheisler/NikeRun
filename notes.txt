@@ -19,3 +19,7 @@ I realize I am writing inefficent code to generate the number of times ran 1km f
 After writing out and testing the code for the askes, I did not include the type of run it was.  Depending on the type, some information is missing.  Will need to look into this.  Added some tests. It doesn't matter.  Yay!
 
 I am taking some sort cuts due to time constraints.  Normally, I would use some sort of interface between getting the data and the main runniing object.  I just want to get this done.  I have never used the Java json parser before and I expect this to take some time.
+
+Fell down deep rabbit hole of JSON parsing and file reading in Java. But I figured it out.  
+
+Now to write the static class to run everything.  I just need to get this done.
