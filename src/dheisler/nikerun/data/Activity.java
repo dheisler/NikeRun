@@ -1,5 +1,5 @@
 /**
- * @author Debbie Heisler
+ * author Debbie Heisler
  *
  * This class contains the data to represent one activity.  Not all of the
  * possible fields for an activity are represented.  They were skipped for

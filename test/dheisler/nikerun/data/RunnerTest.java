@@ -1,5 +1,12 @@
+/**
+ * author Debbie Heisler
+ *
+ * This class tests the Runner.java class
+ */
+
 package dheisler.nikerun.data;
 
+import dheisler.nikerun.data.Activity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

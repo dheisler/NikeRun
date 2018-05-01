@@ -1,5 +1,5 @@
 /**
- * @author Debbie Heisler
+ * author Debbie Heisler
  *
  * This class contains the runing data for one runner.
  * It also contains some of the methods needed to answer the questions in

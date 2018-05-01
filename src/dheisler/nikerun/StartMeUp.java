@@ -1,3 +1,7 @@
+/**
+ * author Debbie Heisler
+ *
+ */
 package dheisler.nikerun;
 
 import dheisler.nikerun.data.Runner;

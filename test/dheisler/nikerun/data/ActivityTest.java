@@ -1,3 +1,8 @@
+/**
+ * author Debbie Heisler
+ * This class tests the Activity.java class
+ */
+
 package dheisler.nikerun.data;
 
 import org.junit.jupiter.api.Test;
@@ -8,7 +13,7 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ActivityTest
+public class ActivityTest
 {
     private static final String activityId = "aShortActivityId";
     private static final String startTime = "2017-04-30T18:01:50Z";

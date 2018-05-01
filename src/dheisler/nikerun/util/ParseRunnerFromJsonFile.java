@@ -1,7 +1,11 @@
+/**
+ * author Debbie Heisler
+ */
 package dheisler.nikerun.util;
 
 import dheisler.nikerun.data.Activity;
 import dheisler.nikerun.data.Runner;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
