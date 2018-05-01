@@ -23,3 +23,9 @@ I am taking some sort cuts due to time constraints.  Normally, I would use some 
 Fell down deep rabbit hole of JSON parsing and file reading in Java. But I figured it out.  
 
 Now to write the static class to run everything.  I just need to get this done.
+
+Finished.
+
+5/1/2018
+Refactored and cleaned up the code a bit.  Took out pieces that were not being used.  Added some more comments.  Some were explanations of how to improve the written code. 
+
