@@ -17,6 +17,7 @@ public class Activity
     public static final int RUN = 0;
     public static final int TRAINING = 1;
     public static final int OTHER = 2;
+    public static final int CYCLE  = 3;
 
     private String activityId;
     private int type;
